@@ -3,18 +3,18 @@ from pydantic import BaseModel
 
 class CreateBillRequest(BaseModel):
     bilty_no:int
-    bil_type:int
+    bill_type:int
     amt:int
     chalan_id:int
 
 class CreateChalanRequest(BaseModel):
-    chalan_no:int
-    chalan_date:datetime
+    chalan_no:int    
+    chalan_date:str
     inwarded:int
     station_from:int
     station_to:int
-    created_from:int
     vehicle_id:int
+    created_from:int
 
 class CreateVehicleRequest(BaseModel):
     vehicle_no:int

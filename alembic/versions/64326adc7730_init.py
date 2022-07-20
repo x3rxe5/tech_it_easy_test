@@ -1,8 +1,8 @@
 """init
 
-Revision ID: ca5de7317f00
-Revises: 
-Create Date: 2022-07-19 13:59:25.953142
+Revision ID: 64326adc7730
+Revises: ca5de7317f00
+Create Date: 2022-07-19 22:15:23.429649
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ca5de7317f00'
-down_revision = None
+revision = '64326adc7730'
+down_revision = 'ca5de7317f00'
 branch_labels = None
 depends_on = None
 
@@ -38,14 +38,15 @@ def upgrade() -> None:
         sa.Column('chalan_no',sa.Integer,nullable=False),
         sa.Column('chalan_date',sa.DateTime,nullable=False),
         sa.Column('inwarded',sa.Integer,nullable=False),
-        sa.Column('created_from',sa.DateTime,nullable=False),
+        sa.Column('created_from',sa.Integer,nullable=False),
+
         sa.Column('station_from',sa.Integer,nullable=False),
         sa.Column('station_to',sa.Integer,nullable=False),
         sa.Column('vehicle_id',sa.Integer,nullable=False),
 
         # sa.PrimaryKeyConstraint('chalan_id'),
         # sa.ForeignKeyConstraint(
-        #     ['station_from','branch.branch_id'], 
+        #     ['station_from','branch.branch_id'],
         #     ['station_to','branch.branch_id'],
         #     ['vehicle_id','vehicle_master.vehicle_id']
         # ),

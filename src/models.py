@@ -1,14 +1,11 @@
+from email.policy import default
 from xmlrpc.client import DateTime
-from sqlalchemy import ForeignKey, Integer,String,Enum
+from sqlalchemy import ForeignKey, Integer,String,Enum, false
 from sqlalchemy.sql.schema import Column
 from .database import Base
-from collections import namedtuple
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import TSTZRANGE
 
-def create_named_tuple(*values):
-     return namedtuple('NamedTuple', values)(*values)
-
-amount_details = create_named_tuple(1,2,3)
 
 
 
@@ -19,8 +16,10 @@ class Bilty_master(Base):
     bilty_id = Column(Integer,primary_key=True)
     bilty_no = Column(Integer,nullable=False)
     bill_type = Column(Integer,nullable=False)
-    amt = Column(Enum(*amount_details._asdict().values(), name='amount_details'))
+    amt = Column(Integer,nullable=False,default=1)
     chalan_id = Column(Integer,ForeignKey("chalan_master.chalan_id"))
+
+    Bills = relationship("Chalan_master",back_populates="Chalan_Bill")
 
 
 class Chalan_master(Base):
@@ -29,7 +28,7 @@ class Chalan_master(Base):
 
     chalan_id = Column(Integer,primary_key=True)
     chalan_no = Column(Integer,nullable=False)
-    chalan_date = Column(DateTime,nullable=False)
+    chalan_date = Column(TSTZRANGE(),nullable=False)
     inwarded = Column(Integer,nullable=False)
     station_from = Column(Integer,ForeignKey("branch.branch_id"))
     station_to = Column(Integer,ForeignKey("branch.branch_id"))
@@ -37,8 +36,13 @@ class Chalan_master(Base):
     vehicle_id = Column(Integer,ForeignKey("vehicle_master.vehicle_id"))
 
     # Relationship
-    children = relationship("Bilty_master")
+    Chalan_Bill = relationship("Bilty_master",back_populates="Bills")
 
+    Chalan_station_to = relationship("Branch_master", foreign_keys=[station_from])
+    Chalan_station_to = relationship("Branch_master", foreign_keys=[station_to])
+
+    # Chalan_vehicle = relationship("Vehicle_master",foreign_keys=[vehicle_id])
+    
 
 class Vehicle_master(Base):
 
@@ -48,7 +52,7 @@ class Vehicle_master(Base):
     vehicle_no = Column(Integer,nullable=False)
     owner_name = Column(String,nullable=False)
 
-    children = relationship("Chalan_master")
+    # Vehicle = relationship("Chalan_master",back_populates="Chalan_Vehicle")
 
 
 class Branch_master(Base):
@@ -58,4 +62,4 @@ class Branch_master(Base):
     branch_id = Column(Integer,primary_key=True)
     branch_name = Column(String,nullable=False)
 
-    children = relationship("Chalan_master")
+    # Branch = relationship("Chalan_master",back_populates="Chalan_Branch")

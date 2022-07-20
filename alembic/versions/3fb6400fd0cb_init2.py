@@ -1,8 +1,8 @@
-"""init
+"""init2
 
-Revision ID: ca5de7317f00
-Revises: 
-Create Date: 2022-07-19 13:59:25.953142
+Revision ID: 3fb6400fd0cb
+Revises: 25cc3a0ffcf4
+Create Date: 2022-07-20 14:19:40.791905
 
 """
 from alembic import op
@@ -10,11 +10,10 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ca5de7317f00'
-down_revision = None
+revision = '3fb6400fd0cb'
+down_revision = '25cc3a0ffcf4'
 branch_labels = None
 depends_on = None
-
 
 
 def upgrade() -> None:
@@ -38,7 +37,7 @@ def upgrade() -> None:
         sa.Column('chalan_no',sa.Integer,nullable=False),
         sa.Column('chalan_date',sa.DateTime,nullable=False),
         sa.Column('inwarded',sa.Integer,nullable=False),
-        sa.Column('created_from',sa.DateTime,nullable=False),
+        sa.Column('created_from',sa.Integer,nullable=False),
         sa.Column('station_from',sa.Integer,nullable=False),
         sa.Column('station_to',sa.Integer,nullable=False),
         sa.Column('vehicle_id',sa.Integer,nullable=False),
